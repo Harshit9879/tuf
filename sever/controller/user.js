@@ -73,6 +73,7 @@ export const getUsers = async (req, res) => {
 
     // Cache the paginated users
     redisClient.set(cacheKey, JSON.stringify(users));
+    await redisClient.expire(cacheKey, 60);
 
     // Return the paginated list of users
     return res.status(200).json(users);
